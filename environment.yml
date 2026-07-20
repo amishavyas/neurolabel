@@ -2,8 +2,12 @@ name: neurolabel
 channels:
   - conda-forge
 dependencies:
-  - python=3.11
+  - python 
   - pip
-  - ipykernel
+  - numpy
+  - pandas
+  - nilearn
+  - nibabel
+  - matplotlib
   - pip:
       - -e ".[dev]"
