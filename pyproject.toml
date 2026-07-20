@@ -1,69 +1,36 @@
-[build-system]
-requires = ["setuptools>=69", "wheel"]
-build-backend = "setuptools.build_meta"
-
+@ -0,0 +1,35 @@
 [project]
 name = "neurolabel"
-version = "0.1.0.dev0"
-description = "Evidence-based anatomical and functional characterization of brain parcels"
+version = "0.0.1"
+authors = [
+  { name="Amisha Vyas", email="your@email.com" },
+  { name="America Romero", email="america@uoregon.edu" },
+  { name="Mia Casburn", email="m.casburn1@universityofgalway.ie" },
+  { name="Lara Ressin", email="L.Ressin1@universityofgalway.ie" },
+  { name="Rajikha Raja", email="rajikha.raja@stjude.org" },
+  { name="Anna Isberg", email="aei00004@mix.wvu.edu" },
+  { name="Kaitlyn Mundy", email="km3963@columbia.edu" },
+  { name="Alex Litovchenko", email="al4877@columbia.edu" },
+]
+description = "A python package to generate anatomical and functional labels for Neurosynth parcellations."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
 dependencies = [
-  "nibabel>=5.0",
-  "numpy>=1.24",
-  "scipy>=1.10",
-  "tomli>=2; python_version < '3.11'",
+    "numpy",
+    "pandas",
+    "nilearn",
+    "nibabel",
 ]
+[project.urls]
+Homepage = "https://github.com/amishavyas/neurolabel"
+Issues = "https://github.com/amishavyas/neurolabel/issues"
 
-[project.optional-dependencies]
-dev = [
-  "pre-commit>=3.7",
-  "pytest>=8",
-  "pytest-cov>=5",
-  "ruff>=0.5",
-]
-
-[tool.setuptools]
-package-dir = {"" = "src"}
-include-package-data = true
-
-[tool.setuptools.packages.find]
-where = ["src"]
-include = ["neurolabel*"]
-
-[tool.setuptools.package-data]
-neurolabel = ["*.toml", "**/*.toml"]
-
-[tool.pytest.ini_options]
-minversion = "8.0"
-addopts = [
-  "--strict-config",
-  "--strict-markers",
-  "--cov=neurolabel",
-  "--cov-report=term-missing",
-  "--cov-report=xml",
-  "--cov-fail-under=85",
-]
-testpaths = ["tests"]
-
-[tool.coverage.run]
-branch = true
-source = ["neurolabel"]
-omit = ["*.ipynb", "*/notebooks/*"]
-
-[tool.coverage.report]
-fail_under = 85
-show_missing = true
-skip_covered = true
-
-[tool.ruff]
-line-length = 88
-src = ["src", "tests"]
-target-version = "py310"
-extend-exclude = ["*.ipynb"]
-
-[tool.ruff.lint]
-select = ["E", "F", "I", "B", "UP"]
-
-[tool.ruff.format]
-docstring-code-format = true
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
