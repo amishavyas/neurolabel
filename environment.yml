@@ -1,0 +1,7 @@
+name: neurolabel
+channels:
+  - defaults
+dependencies:
+  - python
+  - ipykernel
+prefix: /opt/anaconda3/envs/neurolabel
