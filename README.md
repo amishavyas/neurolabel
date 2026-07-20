@@ -13,4 +13,5 @@ atlas = neurolabel.load_atlas("neurosynth_k50")
 print(atlas.parcel_ids)
 ```
 
-See the [documentation](docs/) and [contribution guide](CONTRIBUTING.md).
+See the [architecture](docs/architecture.md) and
+[contribution guide](CONTRIBUTING.md).

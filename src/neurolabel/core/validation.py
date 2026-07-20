@@ -224,7 +224,9 @@ def _discrete_labels(
         return None, (), max_deviation
 
     bounds = np.iinfo(np.int64)
-    if rounded.min() < bounds.min or rounded.max() > bounds.max:
+    minimum = rounded.min().item()
+    maximum = rounded.max().item()
+    if minimum < bounds.min or maximum > bounds.max:
         findings.append(
             _finding(
                 "LABEL_OUT_OF_RANGE",

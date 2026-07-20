@@ -20,3 +20,4 @@ repos:
     hooks:
       - id: nbstripout
         files: \.ipynb$
+        exclude: ^src/(calc_centroid|discrete_functional_decoder)\.ipynb$
