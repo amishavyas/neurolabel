@@ -1,11 +1,9 @@
 name: neurolabel
 channels:
-  - defaults
+  - conda-forge
 dependencies:
-  - python
+  - python=3.11
+  - pip
   - ipykernel
-  - numpy
-  - pandas
-  - nilearn
-  - nibabel
-prefix: /opt/anaconda3/envs/neurolabel
+  - pip:
+      - -e ".[dev]"
