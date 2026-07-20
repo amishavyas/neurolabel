@@ -1,44 +1,40 @@
+from __future__ import annotations
+
+from pathlib import Path
+
 import nibabel as nib
 import numpy as np
 
+from neurolabel.core.extraction import extract_label_mask
 
-def extract_parcel_mask(nifti_file=None, nifti_file_name=None, parcel_num=None):
-    """
-    Create a binary mask for a single parcel from a labeled NIfTI parcellation.
+
+def extract_parcel_mask(
+    nifti_file: str | Path | nib.spatialimages.SpatialImage | None = None,
+    parcel_num: int | None = None,
+    *,
+    nifti_file_name: str | Path | None = None,
+) -> tuple[np.ndarray, nib.Nifti1Image]:
+    """Create a binary mask for an existing discrete image label.
 
     Parameters
     ----------
-    nifti_file : str or pathlib.Path
-        Path to the labeled parcellation NIfTI file.
-    parcel_num : int
-        Label of the parcel to extract. Must correspond to a valid
-        non-background parcel (background is label 0).
+    nifti_file
+        Path to, or loaded form of, a labeled NIfTI image.
+    parcel_num
+        Existing integer label, including zero.
+    nifti_file_name
+        Compatibility keyword for a labeled NIfTI path.
 
     Returns
     -------
-    mask : ndarray
-        Binary NumPy array with 1s for voxels belonging to the selected
-        parcel and 0s elsewhere.
-    mask_img : nibabel.Nifti1Image
-        NIfTI image containing the binary mask in the original image space.
-
-    Raises
-    ------
-    ValueError
-        If `parcel_num` is 0 or is not present in the parcellation.
+    mask
+        Uint8 array with ones at the selected label.
+    mask_img
+        NIfTI-1 mask preserving the source geometry.
     """
-    if nifti_file_name:
-        img = nib.load(nifti_file_name)
-    elif nifti_file:
-        img = nifti_file
-    else:
-        img = None
-    data = np.round(img.get_fdata()).astype(int)
-
-    if parcel_num == 0 or parcel_num not in np.unique(data):
-        raise ValueError("Invalid parcel number.")
-
-    mask = (data == parcel_num).astype(np.int32)
-    mask_img = nib.Nifti1Image(mask, img.affine, img.header)
-
-    return mask, mask_img
+    source = nifti_file_name if nifti_file_name is not None else nifti_file
+    if source is None:
+        raise ValueError("Provide nifti_file or nifti_file_name.")
+    if parcel_num is None:
+        raise TypeError("parcel_num must be an integer.")
+    return extract_label_mask(source, parcel_num)
