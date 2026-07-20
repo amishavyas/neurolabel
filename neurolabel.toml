@@ -1,0 +1,35 @@
+[project]
+name = "neurolabel"
+version = "0.0.1"
+authors = [
+  { name="Amisha Vyas", email="your@email.com" },
+  { name="America Romero", email="america@uoregon.edu" },
+  { name="Mia Casburn", email="m.casburn1@universityofgalway.ie" },
+  { name="Lara Ressin", email="L.Ressin1@universityofgalway.ie" },
+  { name="Rajikha Raja", email="rajikha.raja@stjude.org" },
+  { name="Anna Isberg", email="aei00004@mix.wvu.edu" },
+  { name="Kaitlyn Mundy", email="km3963@columbia.edu" },
+  { name="Alex Litovchenko", email="al4877@columbia.edu" },
+]
+description = "A python package to generate anatomical and functional labels for Neurosynth parcellations."
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+dependencies = [
+    "numpy",
+    "pandas",
+    "nilearn",
+    "nibabel",
+]
+[project.urls]
+Homepage = "https://github.com/amishavyas/neurolabel"
+Issues = "https://github.com/amishavyas/neurolabel/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
