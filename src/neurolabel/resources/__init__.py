@@ -1,0 +1,1 @@
+"""Packaged NeuroLabel resource manifests."""
