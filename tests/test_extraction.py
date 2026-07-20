@@ -93,9 +93,11 @@ def test_path_and_compatibility_wrapper_return_same_two_values(
 
     direct = extract_label_mask(path, 2)
     wrapped = extract_parcel_mask(path, 2)
+    wrapped_by_name = extract_parcel_mask(nifti_file_name=path, parcel_num=2)
 
-    assert len(direct) == len(wrapped) == 2
+    assert len(direct) == len(wrapped) == len(wrapped_by_name) == 2
     assert_array_equal(wrapped[0], direct[0])
+    assert_array_equal(wrapped_by_name[0], direct[0])
     assert_array_equal(wrapped[1].affine, direct[1].affine)
     assert_array_equal(np.asanyarray(wrapped[1].dataobj), direct[0])
 
