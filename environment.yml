@@ -4,4 +4,8 @@ channels:
 dependencies:
   - python
   - ipykernel
+  - numpy
+  - pandas
+  - nilearn
+  - nibabel
 prefix: /opt/anaconda3/envs/neurolabel

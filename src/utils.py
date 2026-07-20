@@ -2,7 +2,7 @@ import nibabel as nib
 import numpy as np
 
 
-def extract_parcel_mask(nifti_file, parcel_num):
+def extract_parcel_mask(nifti_file=None, nifti_file_name=None, parcel_num=None):
     """
     Create a binary mask for a single parcel from a labeled NIfTI parcellation.
 
@@ -27,7 +27,12 @@ def extract_parcel_mask(nifti_file, parcel_num):
     ValueError
         If `parcel_num` is 0 or is not present in the parcellation.
     """
-    img = nib.load(nifti_file)
+    if nifti_file_name:
+        img = nib.load(nifti_file_name)
+    elif nifti_file:
+        img = nifti_file
+    else:
+        img = None
     data = np.round(img.get_fdata()).astype(int)
 
     if parcel_num == 0 or parcel_num not in np.unique(data):
