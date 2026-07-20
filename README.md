@@ -1,1 +1,2 @@
 NeuroHack 2026 Project (Yay)
+<div class="tenor-gif-embed" data-postid="10886490706421693841" data-share-method="host" data-aspect-ratio="0.562249" data-width="100%"><a href="https://tenor.com/view/jimothy-raccoon-seattle-seattle-jimothy-seattle-cryptid-gif-10886490706421693841">Jimothy Raccoon GIF</a>from <a href="https://tenor.com/search/jimothy-gifs">Jimothy GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
