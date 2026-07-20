@@ -1,0 +1,24 @@
+atlas_id = "neurosynth_k200"
+display = "Neurosynth Parcellation k=200"
+background_values = [0]
+expected_parcel_count = 200
+expected_id_range = [1, 200]
+coordinate_space = "unknown"
+coordinate_space_status = "TO_BE_VERIFIED"
+source_reference = "NeuroVault collection 2099"
+notes = [
+  "Coordinate space has not been verified; no MNI-space claim is made.",
+  "Stored parcel labels are one-indexed (1..200), despite an earlier zero-indexed premise.",
+]
+image_path = "parcellations/neurosynth/Neurosynth_Parcellation_k200.nii.gz"
+expected_sha256 = "f11324b019ded3ff9c5850a67adf80c8113872bd1f3415025d4d6af0300d94bf"
+expected_shape = [91, 109, 91]
+expected_voxel_sizes = [2.0, 2.0, 2.0]
+expected_affine = [
+  [-2.0, 0.0, 0.0, 90.0],
+  [0.0, 2.0, 0.0, -126.0],
+  [0.0, 0.0, 2.0, -72.0],
+  [0.0, 0.0, 0.0, 1.0],
+]
+expected_stored_dtype = "float64"
+max_integer_deviation = 4.6566128730773926e-08
