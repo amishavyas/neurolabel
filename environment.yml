@@ -5,5 +5,9 @@ dependencies:
   - python=3.11
   - pip
   - ipykernel
+  - numpy
+  - pandas
+  - nilearn
+  - nibabel
   - pip:
       - -e ".[dev]"
