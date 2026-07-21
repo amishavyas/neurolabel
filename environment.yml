@@ -9,5 +9,6 @@ dependencies:
   - nilearn
   - nibabel
   - matplotlib
+  - scipy
   - pip:
       - -e ".[dev]"
