@@ -1,15 +1,17 @@
+from importlib.resources import as_file, files
 import numpy as np
 import nibabel as nib
+from nilearn.image import load_img
 
 
-def extract_parcel_mask(nifti_file, parcel_num):
+def extract_parcel_mask(parcellation, parcel_num):
     """
     Create a binary mask for a single parcel from a labeled NIfTI parcellation.
 
     Parameters
     ----------
-    nifti_file : str or pathlib.Path
-        Path to the labeled parcellation NIfTI file.
+    parcellation : str, pathlib.Path, or Niimg-like object
+        Labeled parcellation image.
     parcel_num : int
         Label of the parcel to extract. Must correspond to a valid
         non-background parcel (background is label 0).
@@ -27,7 +29,7 @@ def extract_parcel_mask(nifti_file, parcel_num):
     ValueError
         If `parcel_num` is 0 or is not present in the parcellation.
     """
-    img = nib.load(nifti_file)
+    img = load_img(parcellation)
     data = np.round(img.get_fdata()).astype(int)
 
     if parcel_num == 0 or parcel_num not in np.unique(data):
@@ -38,8 +40,6 @@ def extract_parcel_mask(nifti_file, parcel_num):
     mask_img = nib.Nifti1Image(mask, img.affine, img.header)
 
     return mask, mask_img
-<<<<<<< Updated upstream
-=======
 
 
 _PARCELLATIONS = {
@@ -142,4 +142,3 @@ def atlas_overlap(nifti_file:str, parcel_num:int, atlas_string:str, top_10:bool=
     if top_10: 
         overlap_df2 = overlap_df2.iloc[0:10]
     return overlap_df2
->>>>>>> Stashed changes
