@@ -1,15 +1,17 @@
+from importlib.resources import as_file, files
 import numpy as np
 import nibabel as nib
+from nilearn.image import load_img
 
 
-def extract_parcel_mask(nifti_file, parcel_num):
+def extract_parcel_mask(parcellation, parcel_num):
     """
     Create a binary mask for a single parcel from a labeled NIfTI parcellation.
 
     Parameters
     ----------
-    nifti_file : str or pathlib.Path
-        Path to the labeled parcellation NIfTI file.
+    parcellation : str, pathlib.Path, or Niimg-like object
+        Labeled parcellation image.
     parcel_num : int
         Label of the parcel to extract. Must correspond to a valid
         non-background parcel (background is label 0).
@@ -27,7 +29,7 @@ def extract_parcel_mask(nifti_file, parcel_num):
     ValueError
         If `parcel_num` is 0 or is not present in the parcellation.
     """
-    img = nib.load(nifti_file)
+    img = load_img(parcellation)
     data = np.round(img.get_fdata()).astype(int)
 
     if parcel_num == 0 or parcel_num not in np.unique(data):
@@ -38,3 +40,50 @@ def extract_parcel_mask(nifti_file, parcel_num):
     mask_img = nib.Nifti1Image(mask, img.affine, img.header)
 
     return mask, mask_img
+
+
+_PARCELLATIONS = {
+    "neurosynth50": "Neurosynth_Parcellation_k50.nii.gz",
+    "neurosynth100": "Neurosynth_Parcellation_k100.nii.gz",
+    "neurosynth200": "Neurosynth_Parcellation_k200.nii.gz",
+}
+
+
+def load_neurosynth(name: str) -> nib.Nifti1Image:
+    """
+    Load a bundled Neurosynth parcellation.
+
+    Parameters
+    ----------
+    name
+        Name of the parcellation to load.
+
+    Returns
+    -------
+    nibabel.Nifti1Image
+        Loaded parcellation image.
+
+    Raises
+    ------
+    ValueError
+        If ``name`` is not a supported Neurosynth parcellation.
+    """
+    try:
+        filename = _PARCELLATIONS[name.lower()]
+    except KeyError as exc:
+        available = ", ".join(sorted(_PARCELLATIONS))
+        raise ValueError(
+            f"Unknown Neurosynth parcellation '{name}'. "
+            f"Available parcellations: {available}."
+        ) from exc
+
+    resource = files("data.parcellations").joinpath(filename)
+
+    with as_file(resource) as path:
+        image = nib.load(path)
+
+        return nib.Nifti1Image(
+            np.asanyarray(image.dataobj),
+            image.affine,
+            image.header.copy(),
+        )
