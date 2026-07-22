@@ -1,17 +1,11 @@
+[![GitHub issues](https://img.shields.io/github/issues/amishavyas/neurolabel.svg)](https://github.com/miykael/atlasreader/issues/)
+[![GitHub pull-requests](https://img.shields.io/github/issues-pr/amishavyas/neurolabel.svg)](https://github.com/amishavyas/neurolabel/pulls/)
+[![GitHub contributors](https://img.shields.io/github/contributors/amishavyas/neurolabel.svg)](https://GitHub.com/amishavyas/neurolabel/graphs/contributors/)
+![GitHub repo size](https://img.shields.io/github/repo-size/amishavyas/neurolabel)
+
+
 # neurolabel
 
-neurolabel provides a small, installable Python interface for loading and working with labeled neuroimaging atlases while keeping atlas metadata and scientific assumptions explicit.
+This package provides a Python interface for generating XYZ. It is intended for neuroscience and psychology researchers.
 
-```bash
-python3 -m pip install -e .
-```
-
-```python
-import neurolabel
-
-atlas = neurolabel.load_atlas("neurosynth_k50")
-print(atlas.parcel_ids)
-```
-
-See the [architecture](docs/architecture.md) and
-[contribution guide](CONTRIBUTING.md).
+Please finish this readme later 
