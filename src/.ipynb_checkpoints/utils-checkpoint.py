@@ -87,6 +87,8 @@ def load_neurosynth(name: str) -> nib.Nifti1Image:
             image.affine,
             image.header.copy(),
         )
+<<<<<<< Updated upstream
+=======
         
 def atlas_overlap(nifti_file:str, parcel_num:int, atlas_string:str, top_10:bool=True):
     """
@@ -142,3 +144,4 @@ def atlas_overlap(nifti_file:str, parcel_num:int, atlas_string:str, top_10:bool=
     if top_10: 
         overlap_df2 = overlap_df2.iloc[0:10]
     return overlap_df2
+>>>>>>> Stashed changes
