@@ -8,7 +8,6 @@ from functools import lru_cache
 
 plt.rcParams["font.family"] = "Helvetica"
 
-
 @lru_cache(maxsize=None)
 def get_studyset(version, source, vocab, feature_type, target):
     return fetch_neurosynth(

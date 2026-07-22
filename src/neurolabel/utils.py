@@ -89,20 +89,51 @@ def load_neurosynth(name: str) -> nib.Nifti1Image:
             image.header.copy(),
         )
 
-_NILEARN_ATLASES = {
-    "harvard-oxford": nilearn.datasets.fetch_atlas_harvard_oxford(),
-    "schaefer": nilearn.datasets.fetch_atlas_schaefer_2018(),
-    "yeo": nilearn.datasets.fetch_atlas_yeo_2011(),
+
+def _fetch_schaefer(**kwargs):
+    defaults = {
+        "n_rois": 400,
+        "yeo_networks": 7,
+        "resolution_mm": 2,
+    }
+    defaults.update(kwargs)
+    return nilearn.datasets.fetch_atlas_schaefer_2018(**defaults)
+
+
+def _fetch_schaefer(**kwargs):
+    defaults = {
+        "n_rois": 400,
+        "yeo_networks": 7,
+        "resolution_mm": 2,
+    }
+    defaults.update(kwargs)
+    return nilearn.datasets.fetch_atlas_schaefer_2018(**defaults)
+
+
+def _fetch_harvard_oxford(**kwargs):
+    defaults = {"atlas_name": "cort-maxprob-thr25-2mm"}
+    defaults.update(kwargs)
+    return nilearn.datasets.fetch_atlas_harvard_oxford(**defaults)
+
+
+_NILEARN_FETCHERS = {
+    "harvard-oxford": _fetch_harvard_oxford,
+    "schaefer": _fetch_schaefer,
+    "yeo": nilearn.datasets.fetch_atlas_yeo_2011,
 }
 
 
-def load_nilearn(name: str) -> nib.Nifti1Image:
+def load_nilearn(name: str, **kwargs) -> nib.Nifti1Image:
     """
-    Load a bundled Neurosynth parcellation.
+    Load a Nilearn atlas or parcellation.
+
     Parameters
     ----------
     name
         Name of the parcellation to load.
+    **kwargs
+        Additional keyword arguments passed to the corresponding Nilearn
+        atlas fetcher.
 
     Returns
     -------
@@ -112,17 +143,18 @@ def load_nilearn(name: str) -> nib.Nifti1Image:
     Raises
     ------
     ValueError
-        If ``name`` is not a supported Nilearn parcellation or parcellation list has not been updated in neurolabel.
+        If ``name`` is not a supported Nilearn parcellation.
     """
     try:
-        file_fetcher = _NILEARN_ATLASES[name.lower()]
+        file_fetcher = _NILEARN_FETCHERS[name.lower()]
     except KeyError as exc:
-        available = ", ".join(sorted(_NILEARN_ATLASES))
+        available = ", ".join(sorted(_NILEARN_FETCHERS))
         raise ValueError(
             f"Parcellation '{name}' is unavailable through neurolabel. "
             f"Available parcellations: {available}."
         ) from exc
 
+<<<<<<< HEAD
     return file_fetcher()
 
 def summarize_statistical_map(statistical_map,parcellation="neurosynth200",threshold=None,mode="two-sided",min_voxels=1,):
@@ -334,3 +366,6 @@ def summarize_statistical_map(statistical_map,parcellation="neurosynth200",thres
     result.attrs["significant_voxels_outside_parcellation"] = total_significant - total_labeled
 
     return result
+=======
+    return file_fetcher(**kwargs)
+>>>>>>> b6af5df (allow additional parameters to load parcellations)
