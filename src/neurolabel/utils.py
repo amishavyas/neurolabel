@@ -154,10 +154,10 @@ def load_nilearn(name: str, **kwargs) -> nib.Nifti1Image:
             f"Available parcellations: {available}."
         ) from exc
 
-<<<<<<< HEAD
-    return file_fetcher()
+    return file_fetcher(**kwargs)
 
-def summarize_statistical_map(statistical_map,parcellation="neurosynth200",threshold=None,mode="two-sided",min_voxels=1,):
+
+def summarize_statistical_map(statistical_map, parcellation="neurosynth200", threshold=None, mode="two-sided", min_voxels=1,):
     """
     Find Neurosynth parcels containing significant voxels.
 
@@ -245,14 +245,15 @@ def summarize_statistical_map(statistical_map,parcellation="neurosynth200",thres
         raise ValueError("parcellation must be three-dimensional.")
 
     same_grid = (stat_img.shape == parcel_img.shape and np.allclose(stat_img.affine,
-            parcel_img.affine,rtol=1e-5,atol=1e-5,))
+                                                                    parcel_img.affine, rtol=1e-5, atol=1e-5,))
 
     if not same_grid:
         # Parcel IDs are categorical, so nearest-neighbor interpolation
         # must be used.
-        parcel_img = resample_to_img(parcel_img,stat_img,interpolation="nearest",)
+        parcel_img = resample_to_img(
+            parcel_img, stat_img, interpolation="nearest",)
 
-    stat_data = np.asarray(stat_img.get_fdata(),dtype=float,)
+    stat_data = np.asarray(stat_img.get_fdata(), dtype=float,)
 
     parcel_data = np.round(parcel_img.get_fdata()).astype(int)
 
@@ -262,7 +263,7 @@ def summarize_statistical_map(statistical_map,parcellation="neurosynth200",thres
         significant = (finite & (np.abs(stat_data) >= threshold))
 
     elif mode == "positive":
-        significant = (finite  & (stat_data >= threshold))
+        significant = (finite & (stat_data >= threshold))
 
     elif mode == "negative":
         significant = (finite & (stat_data <= -threshold))
@@ -330,7 +331,7 @@ def summarize_statistical_map(statistical_map,parcellation="neurosynth200",thres
 
         peak_ijk = voxel_indices[peak_index]
 
-        peak_xyz = nib.affines.apply_affine(stat_img.affine,peak_ijk,)
+        peak_xyz = nib.affines.apply_affine(stat_img.affine, peak_ijk,)
 
         parcel_voxels = int(np.count_nonzero(parcel_mask))
 
@@ -339,8 +340,8 @@ def summarize_statistical_map(statistical_map,parcellation="neurosynth200",thres
                 "parcel_id": parcel_id,
                 "significant_voxels": n_significant,
                 "parcel_voxels": parcel_voxels,
-                "percent_of_significant_map": ( 100.0 * n_significant / total_labeled ),
-                "percent_of_parcel_significant": ( 100.0 * n_significant / parcel_voxels ),
+                "percent_of_significant_map": (100.0 * n_significant / total_labeled),
+                "percent_of_parcel_significant": (100.0 * n_significant / parcel_voxels),
                 "positive_voxels": int(np.count_nonzero(values > 0)),
                 "negative_voxels": int(np.count_nonzero(values < 0)),
                 "mean_value": float(np.mean(values)),
@@ -353,11 +354,11 @@ def summarize_statistical_map(statistical_map,parcellation="neurosynth200",thres
             }
         )
 
-    result = pd.DataFrame(rows,columns=columns,)
+    result = pd.DataFrame(rows, columns=columns,)
 
     if not result.empty:
         result = (result.sort_values(["significant_voxels", "parcel_id"],
-            ascending=[False, True],).reset_index(drop=True))
+                                     ascending=[False, True],).reset_index(drop=True))
 
     result.attrs["total_significant_voxels"] = (total_significant)
 
@@ -366,6 +367,3 @@ def summarize_statistical_map(statistical_map,parcellation="neurosynth200",thres
     result.attrs["significant_voxels_outside_parcellation"] = total_significant - total_labeled
 
     return result
-=======
-    return file_fetcher(**kwargs)
->>>>>>> b6af5df (allow additional parameters to load parcellations)
