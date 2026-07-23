@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from nibabel import Nifti1Image
 from nilearn.image import resample_to_img
-from utils import *
+from neurolabel.utils import *
 
 
 def atlas_overlap(target_atlas: str | Nifti1Image, parcel_num: int, label_atlas: str | Nifti1Image):
@@ -60,7 +60,7 @@ def atlas_overlap(target_atlas: str | Nifti1Image, parcel_num: int, label_atlas:
         .sort_values("parcel_overlap", ascending=False)
         .reset_index(drop=True)
     )
-    return overlap_df[overlap_df["intersection_voxels"] > 0]
+    return overlap_df  # [overlap_df["intersection_voxels"] > 0]
 
 
 def plot_anat(overlap_df, top_n=10, bar_color="#0B5CFF"):
@@ -86,13 +86,20 @@ def plot_anat(overlap_df, top_n=10, bar_color="#0B5CFF"):
 
     fig, ax = plt.subplots(figsize=(8, 6))
 
-    ax.barh(top.index, top["parcel_overlap"], color=bar_color)
+    ax.barh(
+        top["regions"],                 # y-axis labels
+        top["parcel_overlap"],  # x-axis values
+        color=bar_color,
+    )
     ax.invert_yaxis()
 
-    ax.set_xlabel("Parcel Overlap (%)", fontsize=13)
-    ax.set_ylabel("")
+    ax.set_xlabel("Parcel Overlap", fontsize=13)
 
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.tick_params(axis="both", labelsize=12)
+
     fig.tight_layout()
+    plt.close(fig)
+
+    return fig
