@@ -1,5 +1,6 @@
 from importlib.resources import as_file, files
 import numpy as np
+import pandas as pd
 import nibabel as nib
 from nilearn.image import load_img
 import nilearn.datasets

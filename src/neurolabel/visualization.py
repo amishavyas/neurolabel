@@ -2,6 +2,7 @@ import logging
 from contextlib import redirect_stderr, redirect_stdout
 from io import BytesIO, StringIO
 import numpy as np
+from PIL import Image
 import matplotlib.pyplot as plt
 import ipywidgets as widgets
 from IPython.display import display
@@ -596,3 +597,7 @@ def interactive_parcellation_viewer(
     show_all_parcels()
 
     return viewer
+
+def show_me_jimothy():
+    img = Image.open("data/jimothy.PNG")
+    return img
