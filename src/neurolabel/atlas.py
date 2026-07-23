@@ -12,7 +12,7 @@ def atlas_overlap(target_atlas: str | Nifti1Image, parcel_num: int, label_atlas:
 
     Parameters:
     ----------
-    target_atlas :  nibabel.Nifti1Image or str. Brain parcellation to be analysed. This is the atlas or labelled image whos
+    target_atlas :  nibabel.Nifti1Image or str. Brain parcellation to be analysed. This is the atlas or labelled image whose
         parcels will be compared against the reference anatomical atlas.
     parcel_num : int. Label of the parcel to extract. Must correspond to a valid non-background parcel (background is label
         0).
