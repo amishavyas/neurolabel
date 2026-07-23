@@ -5,7 +5,7 @@ version = "0.0.1"
 authors = [
   { name="Amisha Vyas", email="yamisha.vyas@columbia.edu" },
   { name="Mia Casburn", email="m.casburn1@universityofgalway.ie" },
-  { name="Hyesun Choi", email="" },
+  { name="Hyesun Choi", email="hchoi@mrn.org" },
   { name="Anna Isberg", email="aei00004@mix.wvu.edu" },
   { name="Alex Litovchenko", email="al4877@columbia.edu" },
   { name="Kaitlyn Mundy", email="km3963@columbia.edu" },
