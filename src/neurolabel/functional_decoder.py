@@ -8,6 +8,7 @@ from functools import lru_cache
 
 plt.rcParams["font.family"] = "Helvetica"
 
+
 @lru_cache(maxsize=None)
 def get_studyset(version, source, vocab, feature_type, target):
     return fetch_neurosynth(
@@ -134,3 +135,4 @@ def plot_decoder(decoded_df, top_n=10, bar_color="#F4A300"):
     ax.spines["right"].set_visible(False)
     ax.tick_params(axis="both", labelsize=12)
     fig.tight_layout()
+    return fig
