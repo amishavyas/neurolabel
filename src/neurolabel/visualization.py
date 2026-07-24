@@ -598,6 +598,34 @@ def interactive_parcellation_viewer(
 
     return viewer
 
-def show_me_jimothy():
+def show_me_jimothy(scale:int = 1):
+    """
+    See Jimothy.
+
+    Parameters
+    ----------
+    scale : int, default 1
+        Decide what scale you would like to see him at.
+
+    Notes
+    -----
+    Reminder, at larger scales the image will take longer to load.
+
+    Returns
+    -------
+    jimothy.PNG
+        Jimothy, as depicted by our resident artist, Lara Ressin.
+    """
     img = Image.open("data/jimothy.PNG")
+    base_height = img.size[0]
+    base_width = img.size[1]
+
+    def resizer(scale=1):
+        new_height = int(base_height * scale)
+        new_width = int(base_width * scale)
+        return (new_height, new_width)
+    
+    dims = resizer(scale)
+    img = img.resize(dims)
+
     return img
