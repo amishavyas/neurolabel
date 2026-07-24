@@ -100,27 +100,27 @@ def _fetch_schaefer(**kwargs):
     defaults.update(kwargs)
     return nilearn.datasets.fetch_atlas_schaefer_2018(**defaults)
 
-
-def _fetch_schaefer(**kwargs):
-    defaults = {
-        "n_rois": 400,
-        "yeo_networks": 7,
-        "resolution_mm": 2,
-    }
-    defaults.update(kwargs)
-    return nilearn.datasets.fetch_atlas_schaefer_2018(**defaults)
-
-
 def _fetch_harvard_oxford(**kwargs):
     defaults = {"atlas_name": "cort-maxprob-thr25-2mm"}
     defaults.update(kwargs)
     return nilearn.datasets.fetch_atlas_harvard_oxford(**defaults)
 
+def _fetch_yeo(**kwargs):
+    defaults = {
+        "data_dir": None, 
+        "url": None, 
+        "resume": True, 
+        "verbose": 1, 
+        "n_networks": 7, 
+        "thickness": "thick",
+        }
+    defaults.update(kwargs)
+    return nilearn.datasets.fetch_atlas_yeo_2011(**defaults)
 
 _NILEARN_FETCHERS = {
     "harvard-oxford": _fetch_harvard_oxford,
     "schaefer": _fetch_schaefer,
-    "yeo": nilearn.datasets.fetch_atlas_yeo_2011,
+    "yeo": _fetch_yeo,
 }
 
 
