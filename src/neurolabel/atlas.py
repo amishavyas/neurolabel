@@ -6,7 +6,7 @@ from nilearn.image import resample_to_img
 from neurolabel.utils import *
 
 
-def atlas_overlap(target_atlas: str | Nifti1Image, parcel_num: int, label_atlas: str | Nifti1Image):
+def atlas_overlap(target_atlas: str | Nifti1Image, parcel_num: int, label_atlas: str | Nifti1Image, intersect_only: bool = False):
     """
     Create a dataframe with the labels of regions and number of voxels that overlap across the given parcel number and atlas/parcellation. 
 
@@ -14,19 +14,17 @@ def atlas_overlap(target_atlas: str | Nifti1Image, parcel_num: int, label_atlas:
     ----------
     target_atlas :  nibabel.Nifti1Image or str. Brain parcellation to be analysed. This is the atlas or labelled image whose
         parcels will be compared against the reference anatomical atlas.
-    parcel_num : int. Label of the parcel to extract. Must correspond to a valid non-background parcel (background is label
-        0).
+    parcel_num : int. Label of the parcel to extract. Must correspond to a valid non-background parcel (background is label 0).
     label_atlas : nibabel.Nifti1Image or str. Reference anatomical atlas used to assign anatomical labels based on spatial
         overlap with the target parcellation.
+    intersect_only : bool. If True, returns only regions that overlap with the target parcel. Else returns all regions in label atlas.
 
     Returns:
     ----------
-    A dataframe called "overlap_df" containing columns:
-        - regions = Regional labels for the given atlas/parcellation specified in the atlas_string input, ordered by overlap.
-        - intersection_voxels = Number of voxels that overlap across the neurosynth parcel and the given atlas/parcellation 
-            specified in the atlas_string input.
-        - parcel_overlap = Percentage of voxels in the neurosynth parcellation that overlap with the given atlas/parcellation
-            specified in the atlas_string input.
+    overlap_df : pandas.DataFrame. Contains the following columns: 
+        - regions : Regional labels for the designated parcel in the target atlas, provided by the label atlas and ordered by overlap
+        - intersection_voxels : Number of voxels that overlap between the designated parcel and a given parcel in the label atlas
+        - parcel_overlap : Proportion of voxels from the designated parcel that are in a given parcel in the label atlas
     """
 
     if type(label_atlas) == str:
@@ -61,7 +59,11 @@ def atlas_overlap(target_atlas: str | Nifti1Image, parcel_num: int, label_atlas:
         .sort_values("parcel_overlap", ascending=False)
         .reset_index(drop=True)
     )
-    return overlap_df  # [overlap_df["intersection_voxels"] > 0]
+
+    if intersect_only:
+        overlap_df = overlap_df[overlap_df["intersection_voxels"] > 0]
+
+    return overlap_df
 
 
 def plot_anat(overlap_df, top_n=10, bar_color="#0B5CFF"):
@@ -89,7 +91,7 @@ def plot_anat(overlap_df, top_n=10, bar_color="#0B5CFF"):
 
     ax.barh(
         top["regions"],                 # y-axis labels
-        top["parcel_overlap"],  # x-axis values
+        top["parcel_overlap"],          # x-axis values
         color=bar_color,
     )
     ax.invert_yaxis()
